@@ -5,7 +5,7 @@ var HomePage = {
   data: function() {
     return {
       people: [],
-      newPerson: {name: "", bio: "", bioVisible: true}
+      newPerson: {name: "", bio: ""}
     };
   },
   created: function() {
@@ -15,7 +15,15 @@ var HomePage = {
   },
   methods: {
     addPerson: function() {
-      this.people.push(this.newPerson);
+      var params = {
+        name: this.newPerson.name,
+        bio: this.newPerson.bio
+      };
+      axios.post("/people.json", params).then(function(response){
+        this.people.push(response.data);
+        this.newPerson.name = "";
+        this.newPerson.bio = "";
+      }.bind(this));
     },
     deletePerson: function(person) {
       var index = this.people.indexOf(person);
