@@ -5,7 +5,8 @@ var HomePage = {
   data: function() {
     return {
       people: [],
-      newPerson: {name: "", bio: ""}
+      newPerson: {name: "", bio: ""},
+      errors: []
     };
   },
   created: function() {
@@ -23,11 +24,16 @@ var HomePage = {
         this.people.push(response.data);
         this.newPerson.name = "";
         this.newPerson.bio = "";
+      }.bind(this)).catch(function(error) {
+        this.errors = error.response.data.errors;
       }.bind(this));
     },
     deletePerson: function(person) {
-      var index = this.people.indexOf(person);
-      this.people.splice(index, 1);
+      var id = person.id
+      axios.delete("/people/" + id).then(function(response) {
+        var index = this.people.indexOf(person);
+        this.people.splice(index, 1);
+      }.bind(this));
     },
     toggleBio: function(person) {
       person.bioVisible = !person.bioVisible;

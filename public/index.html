@@ -21,6 +21,10 @@
 <template id="home-page">
   <div class="vue-component">
 
+    <ul>
+      <li v-for="error in errors">{{ error }}</li>
+    </ul>
+
     <h4>Total number of people: {{ people.length }}</h4>
 
     <div v-for="person in people">
