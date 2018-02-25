@@ -6,7 +6,8 @@ var HomePage = {
     return {
       people: [],
       newPerson: {name: "", bio: ""},
-      errors: []
+      errors: [],
+      nameFilter: ""
     };
   },
   created: function() {
@@ -37,6 +38,9 @@ var HomePage = {
     },
     toggleBio: function(person) {
       person.bioVisible = !person.bioVisible;
+    },
+    isValidPerson: function(person) {
+      return person.name.includes(this.nameFilter);
     }
   },
   computed: {}
