@@ -34,8 +34,13 @@
       <option v-for="person in people">{{ person.name }}</option>
     </datalist>
 
+    <div>
+      <button v-on:click="setSortAttribute('name')">Sort by name</button>
+      <button v-on:click="setSortAttribute('bio')">Sort by bio</button>
+    </div>
+
     <transition-group name="slide-left">
-      <div v-for="person in people" v-if="isValidPerson(person)" v-bind:key="person.id">
+      <div v-for="person in sortedPeople" v-if="isValidPerson(person)" v-bind:key="person.id">
         <h2 v-on:click="toggleBio(person)">{{ person.name }}</h2>
         <h3 v-bind:class="{strike: !person.bioVisible}">{{ person.bio }}</h3>
         <button v-on:click="deletePerson(person)">Delete</button>

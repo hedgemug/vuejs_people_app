@@ -9,6 +9,7 @@ var HomePage = {
       errors: [],
       nameFilter: "",
       bioFilter: "",
+      sortAttribute: 'name'
     };
   },
   created: function() {
@@ -44,9 +45,18 @@ var HomePage = {
       var validName = person.name.toLowerCase().includes(this.nameFilter.toLowerCase());
       var validBio = person.bio.toLowerCase().includes(this.bioFilter.toLowerCase());
       return validName && validBio;
+    },
+    setSortAttribute: function(attribute) {
+      this.sortAttribute = attribute;
     }
   },
-  computed: {}
+  computed: {
+    sortedPeople: function() {
+      return this.people.sort(function(person1, person2) {
+        return person1[this.sortAttribute].localeCompare(person2[this.sortAttribute]);
+      }.bind(this));
+    }
+  }
 };
 
 var router = new VueRouter({
