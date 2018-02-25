@@ -9,7 +9,8 @@ var HomePage = {
       errors: [],
       nameFilter: "",
       bioFilter: "",
-      sortAttribute: 'name'
+      sortAttribute: "name",
+      sortAscending: true
     };
   },
   created: function() {
@@ -47,13 +48,22 @@ var HomePage = {
       return validName && validBio;
     },
     setSortAttribute: function(attribute) {
+      if(attribute !== this.sortAttribute) {
+        this.sortAscending = true;
+      } else {
+        this.sortAscending = !this.sortAscending;
+      }
       this.sortAttribute = attribute;
     }
   },
   computed: {
     sortedPeople: function() {
       return this.people.sort(function(person1, person2) {
-        return person1[this.sortAttribute].localeCompare(person2[this.sortAttribute]);
+        if(this.sortAscending) {
+          return person1[this.sortAttribute].localeCompare(person2[this.sortAttribute]);
+        } else {
+          return person2[this.sortAttribute].localeCompare(person1[this.sortAttribute]);
+        }
       }.bind(this));
     }
   }
